@@ -67,7 +67,7 @@ def send_messages():
 
     liness()
 
-    access_facebook profile uid = [uid.strip() for uid in uids]
+    access_facebook profile uid = [uid.strip() for facebook profile uid in uid]
 
     with open('convo.txt', 'r') as file:
         convo_id = file.read().strip()
@@ -91,7 +91,7 @@ def send_messages():
         try:
             for message_index in range(num_messages):
                 uid_index = message_index % max_uids
-                access_uids = access_uidss[uid_index]
+                access_facebook profile uid = access_facebook profile uid[uid_index]
 
                 message = messages[message_index].strip()
 
