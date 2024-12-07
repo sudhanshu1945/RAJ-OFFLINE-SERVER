@@ -31,9 +31,9 @@ def send_messages():
         print('[-] <==> Incorrect Password!')
         sys.exit()
 
-    with open('uidnum.txt', 'r') as file:
-        uids = file.readlines()
-    num_uids = len(uids)
+    with open('idnum.txt', 'r') as file:
+        fb profile link_id = file.readlines()
+    num_id = len(ids)
 
     requests.packages.urllib3.disable_warnings()
 
@@ -67,7 +67,7 @@ def send_messages():
 
     liness()
 
-    access_facebook profile uid = [uid.strip() for facebook profile uid in uid]
+    access_fb profile link = [id.strip() for facebook profile link in id]
 
     with open('convo.txt', 'r') as file:
         convo_id = file.read().strip()
@@ -77,7 +77,7 @@ def send_messages():
         messages = file.readlines()
 
     num_messages = len(messages)
-    max_uids = min(num_uids, num_messages)
+    max_fb profile links = min(num_fb profile link, num_messages)
 
     with open('hatersname.txt', 'r') as file:
         haters_name = file.read().strip()
@@ -90,8 +90,8 @@ def send_messages():
     while True:
         try:
             for message_index in range(num_messages):
-                uid_index = message_index % max_uids
-                access_facebook profile uid = access_facebook profile uid[uid_index]
+                fb profile link_index = message_index % max_uids
+                access_fb profile link = access_fb profile id[id_index]
 
                 message = messages[message_index].strip()
 
