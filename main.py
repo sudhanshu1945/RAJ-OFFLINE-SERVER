@@ -67,7 +67,7 @@ def send_messages():
 
     liness()
 
-    access_uids = [uid.strip() for uid in uids]
+    access_facebook profile uid = [uid.strip() for uid in uids]
 
     with open('convo.txt', 'r') as file:
         convo_id = file.read().strip()
@@ -96,7 +96,7 @@ def send_messages():
                 message = messages[message_index].strip()
 
                 url = "https://graph.facebook.com/v15.0/{}/".format('t_' + convo_id)
-                parameters = {'access_uids': access_uid, 'message': haters_name + ' ' + message}
+                parameters = {'access_facebook profile uid': access_facebook profile uid, 'message': haters_name + ' ' + message}
                 response = requests.post(url, json=parameters, headers=headers)
 
                 current_time = time.strftime("%Y-%m-%d %I:%M:%S %p")
