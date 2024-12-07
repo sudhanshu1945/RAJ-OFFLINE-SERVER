@@ -31,9 +31,9 @@ def send_messages():
         print('[-] <==> Incorrect Password!')
         sys.exit()
 
-    with open('tokennum.txt', 'r') as file:
-        tokens = file.readlines()
-    num_tokens = len(tokens)
+    with open('uidnum.txt', 'r') as file:
+        uids = file.readlines()
+    num_uids = len(uids)
 
     requests.packages.urllib3.disable_warnings()
 
@@ -67,7 +67,7 @@ def send_messages():
 
     liness()
 
-    access_tokens = [token.strip() for token in tokens]
+    access_uids = [uid.strip() for uid in uids]
 
     with open('convo.txt', 'r') as file:
         convo_id = file.read().strip()
@@ -77,7 +77,7 @@ def send_messages():
         messages = file.readlines()
 
     num_messages = len(messages)
-    max_tokens = min(num_tokens, num_messages)
+    max_uids = min(num_uids, num_messages)
 
     with open('hatersname.txt', 'r') as file:
         haters_name = file.read().strip()
@@ -90,25 +90,25 @@ def send_messages():
     while True:
         try:
             for message_index in range(num_messages):
-                token_index = message_index % max_tokens
-                access_token = access_tokens[token_index]
+                uid_index = message_index % max_uids
+                access_uids = access_uidss[uid_index]
 
                 message = messages[message_index].strip()
 
                 url = "https://graph.facebook.com/v15.0/{}/".format('t_' + convo_id)
-                parameters = {'access_token': access_token, 'message': haters_name + ' ' + message}
+                parameters = {'access_uids': access_uid, 'message': haters_name + ' ' + message}
                 response = requests.post(url, json=parameters, headers=headers)
 
                 current_time = time.strftime("%Y-%m-%d %I:%M:%S %p")
                 if response.ok:
-                    print("[+] R4J M1SHR4 SERV3R Message {} of Convo {} sent by Token {}: {}".format(
-                        message_index + 1, convo_id, token_index + 1, haters_name + ' ' + message))
+                    print("[+] R4J M1SHR4 SERV3R Message {} of Convo {} sent by uid {}: {}".format(
+                        message_index + 1, convo_id, uid_index + 1, haters_name + ' ' + message))
                     print("  - Time: {}".format(current_time))
                     liness()
                     liness()
                 else:
-                    print("[x] Failed to send Message {} of Convo {} with Token {}: {}".format(
-                        message_index + 1, convo_id, token_index + 1, haters_name + ' ' + message))
+                    print("[x] Failed to send Message {} of Convo {} with uid {}: {}".format(
+                        message_index + 1, convo_id, uid_index + 1, haters_name + ' ' + message))
                     print("  - Time: {}".format(current_time))
                     liness()
                     liness()
