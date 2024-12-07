@@ -31,8 +31,8 @@ def send_messages():
         print('[-] <==> Incorrect Password!')
         sys.exit()
 
-    with open('idnum.txt', 'r') as file:
-        fb profile link_id = file.readlines()
+    with open('fb idnum.txt', 'r') as file:
+        fb_id = file.readlines()
     num_id = len(ids)
 
     requests.packages.urllib3.disable_warnings()
