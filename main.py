@@ -1,5 +1,6 @@
 import requests
 import json
+render_templets
 
 def get_access_token(email, password):
     """Fetch the main profile access token."""
